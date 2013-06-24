@@ -1,0 +1,37 @@
+{{extend 'layout.html'}}
+<script>
+jQuery(document).ready(function(){
+    jQuery('.category-title').click(function(){jQuery(this).parents('li').children('.news-list').slideToggle('slow')});
+});
+</script>
+<h1>По категориям</h1>
+    {{if auth.is_logged_in():}}
+        <div class="action_links">
+            {{=A('Добавить категорию', _href=URL("category_add"))}}
+            {{=A('Добавить новость', _href=URL("add"))}}
+        </div>
+    {{pass}}
+<ul class="category">
+{{for row in categories:}}
+    <li>
+    	<h2><a class="category-title">{{='%s (%d)' % (row.category.title, row[count]) }}</a></h2>
+            <div class="news-list">
+            {{for new in news[row.category.id]:}}
+                <div class="teaser">
+                    <div class="picture"><a href="{{=URL('show', args=new.id)}}"><img src="{{=URL('download', args=new.image)}}"></a></div>
+                    <div class="description">
+                        <time class="published-date" datetime="{{=new.newsdate}}">{{=new.newsdate}}</time>
+                        <h3>{{=A(new.title, _href=URL('show', args=new.id))}}</h3>
+                        <div class="content">{{=new.anons}}</div>
+                        {{if auth.is_logged_in():}}
+                        <div class="action-links">
+                            {{=A('Редактировать', _href=URL('edit', args=new.id))}}
+                        </div>
+                        {{pass}}
+                    </div>            
+                </div>
+            {{pass}}
+        </div>
+	</li>
+{{pass}}
+</ul>

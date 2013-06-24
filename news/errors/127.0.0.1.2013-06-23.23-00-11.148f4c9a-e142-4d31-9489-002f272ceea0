@@ -1,0 +1,637 @@
+(dp1
+S'output'
+p2
+S'<class \'cx_Oracle.DatabaseError\'> ORA-00904: "PREVIEW": invalid identifier\n'
+p3
+sS'layer'
+p4
+S'D:\\work\\web2py_src\\web2py\\applications\\news\\models\\db.py'
+p5
+sS'code'
+p6
+S"# -*- coding: utf-8 -*-\n\nimport datetime\nfrom gluon.tools import *\n\ndb = DAL('oracle://test/test@xe')\n\nauth = Auth(db)\nauth.define_tables()\n\ndb.define_table('category',\n    Field('title', unique=True))\n\ndb.define_table('news',\n   Field('id_category', db.category, ondelete='CASCADE'),\n   Field('title', unique=True),\n   Field('newsdate', 'date', default=request.now),\n   Field('image', 'upload', autodelete=True),\n   Field('anons', 'string', length=1024),\n   Field('body', 'text'),\n   Field('id_user', db.auth_user, default=auth.user_id, readable=False, writable=False),\n   format = '%(title)s')\n   \ndb.news.id_category.requires = IS_IN_DB(db, db.category.id, '%(title)s')\ndb.category.title.requires = IS_NOT_EMPTY()\ndb.news.title.requires = IS_NOT_EMPTY()\ndb.news.newsdate.requires = IS_DATE_IN_RANGE(format=T('%Y-%m-%d'),\n                                             maximum=datetime.date.today(),\n                                             error_message='\xd0\x94\xd0\xb0\xd1\x82\xd0\xb0 \xd0\xbd\xd0\xbe\xd0\xb2\xd0\xbe\xd1\x81\xd1\x82\xd0\xb8 \xd0\xbd\xd0\xb5 \xd0\xbc\xd0\xbe\xd0\xb6\xd0\xb5\xd1\x82 \xd0\xb1\xd1\x8b\xd1\x82\xd1\x8c \xd0\xb1\xd0\xbe\xd0\xbb\xd1\x8c\xd1\x88\xd0\xb5 \xd1\x82\xd0\xb5\xd0\xba\xd1\x83\xd1\x89\xd0\xb5\xd0\xb9!')\ndb.news.body.requires = IS_NOT_EMPTY()\ndb.news.anons.requires = IS_LENGTH(1024)\ndb.news.id_user.requires = IS_NOT_EMPTY()\ndb.news.image.requires = IS_IMAGE(extensions=('jpeg', 'png'), maxsize=(800, 600), minsize=(150, 100))\n   \n   \n#########################################################################\n## Here is sample code if you need for\n## - email capabilities\n## - authentication (registration, login, logout, ... )\n## - authorization (role based authorization)\n## - services (xml, csv, json, xmlrpc, jsonrpc, amf, rss)\n## - old style crud actions\n## (more options discussed in gluon/tools.py)\n#########################################################################\n\nfrom gluon.tools import Auth, Crud, Service, PluginManager, prettydate\nauth = Auth(db)\ncrud, service, plugins = Crud(db), Service(), PluginManager()\n\n## create all tables needed by auth if not custom tables\nauth.define_tables(username=False, signature=False)\n\n## configure email\nmail = auth.settings.mailer\nmail.settings.server = 'logging' or 'smtp.gmail.com:587'\nmail.settings.sender = 'you@gmail.com'\nmail.settings.login = 'username:password'\n\n## configure auth policy\nauth.settings.registration_requires_verification = False\nauth.settings.registration_requires_approval = False\nauth.settings.reset_password_requires_verification = True\n\n## if you need to use OpenID, Facebook, MySpace, Twitter, Linkedin, etc.\n## register with janrain.com, write your domain:api_key in private/janrain.key\nfrom gluon.contrib.login_methods.rpx_account import use_janrain\nuse_janrain(auth, filename='private/janrain.key')\n"
+p7
+sS'snapshot'
+p8
+(dp9
+S'exception'
+p10
+(dp11
+S'__module__'
+p12
+S"'cx_Oracle'"
+p13
+sS'__getslice__'
+p14
+S"<method-wrapper '__getslice__' of DatabaseError object>"
+p15
+sS'__str__'
+p16
+S"<method-wrapper '__str__' of DatabaseError object>"
+p17
+sS'__reduce__'
+p18
+S'<built-in method __reduce__ of DatabaseError object>'
+p19
+sS'__dict__'
+p20
+S'{}'
+p21
+sS'__sizeof__'
+p22
+S'<built-in method __sizeof__ of DatabaseError object>'
+p23
+sS'__weakref__'
+p24
+S'None'
+p25
+sS'__init__'
+p26
+S"<method-wrapper '__init__' of DatabaseError object>"
+p27
+sS'__setattr__'
+p28
+S"<method-wrapper '__setattr__' of DatabaseError object>"
+p29
+sS'__reduce_ex__'
+p30
+S'<built-in method __reduce_ex__ of DatabaseError object>'
+p31
+sS'__new__'
+p32
+S'<built-in method __new__ of type object>'
+p33
+sS'__format__'
+p34
+S'<built-in method __format__ of DatabaseError object>'
+p35
+sS'__class__'
+p36
+S"<class 'cx_Oracle.DatabaseError'>"
+p37
+sS'__doc__'
+p38
+S'None'
+p39
+sS'__getitem__'
+p40
+S"<method-wrapper '__getitem__' of DatabaseError object>"
+p41
+sS'__setstate__'
+p42
+S'<built-in method __setstate__ of DatabaseError object>'
+p43
+sS'__getattribute__'
+p44
+S"<method-wrapper '__getattribute__' of DatabaseError object>"
+p45
+sS'args'
+p46
+S'(<cx_Oracle._Error object>,)'
+p47
+sS'__subclasshook__'
+p48
+S'<built-in method __subclasshook__ of type object>'
+p49
+sS'__unicode__'
+p50
+S'<built-in method __unicode__ of DatabaseError object>'
+p51
+sS'__delattr__'
+p52
+S"<method-wrapper '__delattr__' of DatabaseError object>"
+p53
+sS'__repr__'
+p54
+S"<method-wrapper '__repr__' of DatabaseError object>"
+p55
+sS'__hash__'
+p56
+S"<method-wrapper '__hash__' of DatabaseError object>"
+p57
+ssS'evalue'
+p58
+S'ORA-00904: "PREVIEW": invalid identifier\n'
+p59
+sS'request'
+p60
+cgluon.html
+XML_unpickle
+p61
+(S's\xd8S\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top">ajax</td><td valign="top">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">application</td><td valign="top">:</td><td><div>news</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">args</td><td valign="top">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">body</td><td valign="top">:</td><td><div>&lt;cStringIO.StringO object at 0x037ADDA0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">cid</td><td valign="top">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">client</td><td valign="top">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">controller</td><td valign="top">:</td><td><div>default</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">cookies</td><td valign="top">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top">session_id_admin</td><td valign="top">:</td><td><div>127.0.0.1-339a5dde-2682-48d9-9caf-a58d44f9858a<table><tr><td style="font-weight:bold;vertical-align:top">comment</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">domain</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">expires</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">httponly</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">max-age</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">path</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">secure</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">version</td><td valign="top">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">session_id_news</td><td valign="top">:</td><td><div>127.0.0.1-18f5d805-0ac0-43dd-8116-c208695abdf6<table><tr><td style="font-weight:bold;vertical-align:top">comment</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">domain</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">expires</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">httponly</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">max-age</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">path</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">secure</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">version</td><td valign="top">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">session_id_welcome</td><td valign="top">:</td><td><div>127.0.0.1-8955e61f-7038-42e8-b420-e2f359783fdc<table><tr><td style="font-weight:bold;vertical-align:top">comment</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">domain</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">expires</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">httponly</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">max-age</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">path</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">secure</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">version</td><td valign="top">:</td><td><div></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">env</td><td valign="top">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top">app_folders</td><td valign="top">:</td><td><div>set([&#x27;D:\\\\work\\\\web2py_src\\\\web2py\\\\applications\\\\news\\\\&#x27;, &#x27;D:\\\\work\\\\web2py_src\\\\web2py\\\\applications\\\\admin\\\\&#x27;])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">applications_parent</td><td valign="top">:</td><td><div>D:\\work\\web2py_src\\web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">cmd_args</td><td valign="top">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">cmd_options</td><td valign="top">:</td><td><div>&lt;Values at 0x3481508: {&#x27;verbose&#x27;: False, &#x27;ip&#x27;: &#x27;127.0.0.1&#x27;, &#x27;with_scheduler&#x27;: False, &#x27;ips&#x27;: [&#x27;fe80::c56:972a:9eb4:ae73%15&#x27;, &#x27;192.168.1.111&#x27;], &#x27;shutdown_timeout&#x27;: 5, &#x27;taskbar&#x27;: False, &#x27;with_coverage&#x27;: False, &#x27;port&#x27;: 8000, &#x27;maxthreads&#x27;: None, &#x27;softcron&#x27;: False, &#x27;server_name&#x27;: &#x27;Neocomp&#x27;, &#x27;bpython&#x27;: False, &#x27;nogui&#x27;: False, &#x27;pid_filename&#x27;: &#x27;httpserver.pid&#x27;, &#x27;extcron&#x27;: False, &#x27;runcron&#x27;: False, &#x27;run_system_tests&#x27;: False, &#x27;test&#x27;: None, &#x27;folder&#x27;: &#x27;D:\\\\work\\\\web2py_src\\\\web2py&#x27;, &#x27;config&#x27;: &#x27;&#x27;, &#x27;import_models&#x27;: False, &#x27;winservice&#x27;: &#x27;&#x27;, &#x27;shell&#x27;: None, &#x27;run&#x27;: &#x27;&#x27;, &#x27;log_filename&#x27;: &#x27;httpserver.log&#x27;, &#x27;debuglevel&#x27;: 30, &#x27;args&#x27;: [&#x27;&#x27;], &#x27;socket_timeout&#x27;: 5, &#x27;ssl_ca_certificate&#x27;: None, &#x27;scheduler&#x27;: None, &#x27;profiler_filename&#x27;: None, &#x27;ssl_private_key&#x27;: &#x27;&#x27;, &#x27;scheduler_groups&#x27;: None, &#x27;password&#x27;: &#x27;12345&#x27;, &#x27;request_queue_size&#x27;: 5, &#x27;ssl_certificate&#x27;: &#x27;&#x27;, &#x27;cronjob&#x27;: False, &#x27;numthreads&#x27;: None, &#x27;quiet&#x27;: False, &#x27;interfaces&#x27;: None, &#x27;minthreads&#x27;: None, &#x27;timeout&#x27;: 10, &#x27;plain&#x27;: False, &#x27;nobanner&#x27;: False}&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">db_sessions</td><td valign="top">:</td><td><div>set([])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">debugging</td><td valign="top">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">gluon_parent</td><td valign="top">:</td><td><div>D:\\work\\web2py_src\\web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">http_accept</td><td valign="top">:</td><td><div>text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">http_accept_encoding</td><td valign="top">:</td><td><div>gzip, deflate</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">http_accept_language</td><td valign="top">:</td><td><div>ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">http_cache_control</td><td valign="top">:</td><td><div>max-age=0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">http_connection</td><td valign="top">:</td><td><div>keep-alive</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">http_cookie</td><td valign="top">:</td><td><div>session_id_welcome=127.0.0.1-8955e61f-7038-42e8-b420-e2f359783fdc; session_id_admin=127.0.0.1-339a5dde-2682-48d9-9caf-a58d44f9858a; session_id_news=127.0.0.1-18f5d805-0ac0-43dd-8116-c208695abdf6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">http_host</td><td valign="top">:</td><td><div>127.0.0.1:8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">http_user_agent</td><td valign="top">:</td><td><div>Mozilla/5.0 (Windows NT 6.1; WOW64; rv:21.0) Gecko/20100101 Firefox/21.0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">is_jython</td><td valign="top">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">is_pypy</td><td valign="top">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">local_hosts</td><td valign="top">:</td><td><div><table><tr><td><div>::ffff:127.0.0.1</div></td></tr><tr><td><div>::1</div></td></tr><tr><td><div>Neocomp</div></td></tr><tr><td><div>192.168.1.111</div></td></tr><tr><td><div>fe80::c56:972a:9eb4:ae73%15</div></td></tr><tr><td><div>127.0.0.1</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">path_info</td><td valign="top">:</td><td><div>/news/default/index</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">query_string</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">remote_addr</td><td valign="top">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">remote_port</td><td valign="top">:</td><td><div>62873</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">request_method</td><td valign="top">:</td><td><div>GET</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">request_uri</td><td valign="top">:</td><td><div>/news/default/index</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">script_name</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">server_name</td><td valign="top">:</td><td><div>Neocomp</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">server_port</td><td valign="top">:</td><td><div>8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">server_protocol</td><td valign="top">:</td><td><div>HTTP/1.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">server_software</td><td valign="top">:</td><td><div>Rocket 1.2.6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">web2py_path</td><td valign="top">:</td><td><div>D:\\work\\web2py_src\\web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">web2py_version</td><td valign="top">:</td><td><div>2.5.1-stable+timestamp.2013.06.06.15.39.19</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">wsgi_errors</td><td valign="top">:</td><td><div>&lt;open file &#x27;&lt;stderr&gt;&#x27;, mode &#x27;w&#x27; at 0x01CE60D0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">wsgi_file_wrapper</td><td valign="top">:</td><td><div>&lt;class wsgiref.util.FileWrapper at 0x0342A8B8&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">wsgi_input</td><td valign="top">:</td><td><div>&lt;socket._fileobject object at 0x0347D9B0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">wsgi_multiprocess</td><td valign="top">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">wsgi_multithread</td><td valign="top">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">wsgi_run_once</td><td valign="top">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">wsgi_url_scheme</td><td valign="top">:</td><td><div>http</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">wsgi_version</td><td valign="top">:</td><td><div><table><tr><td><div>1</div></td></tr><tr><td><div>0</div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">extension</td><td valign="top">:</td><td><div>html</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">folder</td><td valign="top">:</td><td><div>D:\\work\\web2py_src\\web2py\\applications\\news\\</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">function</td><td valign="top">:</td><td><div>index</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">get_vars</td><td valign="top">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">global_settings</td><td valign="top">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top">app_folders</td><td valign="top">:</td><td><div>set([&#x27;D:\\\\work\\\\web2py_src\\\\web2py\\\\applications\\\\news\\\\&#x27;, &#x27;D:\\\\work\\\\web2py_src\\\\web2py\\\\applications\\\\admin\\\\&#x27;])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">applications_parent</td><td valign="top">:</td><td><div>D:\\work\\web2py_src\\web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">cmd_args</td><td valign="top">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">cmd_options</td><td valign="top">:</td><td><div>&lt;Values at 0x3481508: {&#x27;verbose&#x27;: False, &#x27;ip&#x27;: &#x27;127.0.0.1&#x27;, &#x27;with_scheduler&#x27;: False, &#x27;ips&#x27;: [&#x27;fe80::c56:972a:9eb4:ae73%15&#x27;, &#x27;192.168.1.111&#x27;], &#x27;shutdown_timeout&#x27;: 5, &#x27;taskbar&#x27;: False, &#x27;with_coverage&#x27;: False, &#x27;port&#x27;: 8000, &#x27;maxthreads&#x27;: None, &#x27;softcron&#x27;: False, &#x27;server_name&#x27;: &#x27;Neocomp&#x27;, &#x27;bpython&#x27;: False, &#x27;nogui&#x27;: False, &#x27;pid_filename&#x27;: &#x27;httpserver.pid&#x27;, &#x27;extcron&#x27;: False, &#x27;runcron&#x27;: False, &#x27;run_system_tests&#x27;: False, &#x27;test&#x27;: None, &#x27;folder&#x27;: &#x27;D:\\\\work\\\\web2py_src\\\\web2py&#x27;, &#x27;config&#x27;: &#x27;&#x27;, &#x27;import_models&#x27;: False, &#x27;winservice&#x27;: &#x27;&#x27;, &#x27;shell&#x27;: None, &#x27;run&#x27;: &#x27;&#x27;, &#x27;log_filename&#x27;: &#x27;httpserver.log&#x27;, &#x27;debuglevel&#x27;: 30, &#x27;args&#x27;: [&#x27;&#x27;], &#x27;socket_timeout&#x27;: 5, &#x27;ssl_ca_certificate&#x27;: None, &#x27;scheduler&#x27;: None, &#x27;profiler_filename&#x27;: None, &#x27;ssl_private_key&#x27;: &#x27;&#x27;, &#x27;scheduler_groups&#x27;: None, &#x27;password&#x27;: &#x27;12345&#x27;, &#x27;request_queue_size&#x27;: 5, &#x27;ssl_certificate&#x27;: &#x27;&#x27;, &#x27;cronjob&#x27;: False, &#x27;numthreads&#x27;: None, &#x27;quiet&#x27;: False, &#x27;interfaces&#x27;: None, &#x27;minthreads&#x27;: None, &#x27;timeout&#x27;: 10, &#x27;plain&#x27;: False, &#x27;nobanner&#x27;: False}&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">db_sessions</td><td valign="top">:</td><td><div>set([])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">debugging</td><td valign="top">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">gluon_parent</td><td valign="top">:</td><td><div>D:\\work\\web2py_src\\web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">is_jython</td><td valign="top">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">is_pypy</td><td valign="top">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">local_hosts</td><td valign="top">:</td><td><div><table><tr><td><div>::ffff:127.0.0.1</div></td></tr><tr><td><div>::1</div></td></tr><tr><td><div>Neocomp</div></td></tr><tr><td><div>192.168.1.111</div></td></tr><tr><td><div>fe80::c56:972a:9eb4:ae73%15</div></td></tr><tr><td><div>127.0.0.1</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">web2py_version</td><td valign="top">:</td><td><div>2.5.1-stable+timestamp.2013.06.06.15.39.19</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">is_https</td><td valign="top">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">is_local</td><td valign="top">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">is_restful</td><td valign="top">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">now</td><td valign="top">:</td><td><div>datetime.datetime(2013, 6, 23, 23, 0, 11, 944000)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">post_vars</td><td valign="top">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">raw_args</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">raw_extension</td><td valign="top">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">url</td><td valign="top">:</td><td><div>/news/default/index</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">utcnow</td><td valign="top">:</td><td><div>datetime.datetime(2013, 6, 23, 19, 0, 11, 944000)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">uuid</td><td valign="top">:</td><td><div>news/127.0.0.1.2013-06-23.23-00-11.148f4c9a-e142-4d31-9489-002f272ceea0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">vars</td><td valign="top">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">wsgi</td><td valign="top">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top">environ</td><td valign="top">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top">HTTP_ACCEPT</td><td valign="top">:</td><td><div>text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">HTTP_ACCEPT_ENCODING</td><td valign="top">:</td><td><div>gzip, deflate</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">HTTP_ACCEPT_LANGUAGE</td><td valign="top">:</td><td><div>ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">HTTP_CACHE_CONTROL</td><td valign="top">:</td><td><div>max-age=0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">HTTP_CONNECTION</td><td valign="top">:</td><td><div>keep-alive</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">HTTP_COOKIE</td><td valign="top">:</td><td><div>session_id_welcome=127.0.0.1-8955e61f-7038-42e8-b420-e2f359783fdc; session_id_admin=127.0.0.1-339a5dde-2682-48d9-9caf-a58d44f9858a; session_id_news=127.0.0.1-18f5d805-0ac0-43dd-8116-c208695abdf6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">HTTP_HOST</td><td valign="top">:</td><td><div>127.0.0.1:8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">HTTP_USER_AGENT</td><td valign="top">:</td><td><div>Mozilla/5.0 (Windows NT 6.1; WOW64; rv:21.0) Gecko/20100101 Firefox/21.0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">PATH_INFO</td><td valign="top">:</td><td><div>/news/default/index</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">QUERY_STRING</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">REMOTE_ADDR</td><td valign="top">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">REMOTE_PORT</td><td valign="top">:</td><td><div>62873</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">REQUEST_METHOD</td><td valign="top">:</td><td><div>GET</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">REQUEST_URI</td><td valign="top">:</td><td><div>/news/default/index</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">SCRIPT_NAME</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">SERVER_NAME</td><td valign="top">:</td><td><div>Neocomp</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">SERVER_PORT</td><td valign="top">:</td><td><div>8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">SERVER_PROTOCOL</td><td valign="top">:</td><td><div>HTTP/1.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">SERVER_SOFTWARE</td><td valign="top">:</td><td><div>Rocket 1.2.6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">wsgi.errors</td><td valign="top">:</td><td><div>&lt;open file &#x27;&lt;stderr&gt;&#x27;, mode &#x27;w&#x27; at 0x01CE60D0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">wsgi.file_wrapper</td><td valign="top">:</td><td><div>&lt;class wsgiref.util.FileWrapper at 0x0342A8B8&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">wsgi.input</td><td valign="top">:</td><td><div>&lt;cStringIO.StringO object at 0x037ADDA0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">wsgi.multiprocess</td><td valign="top">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">wsgi.multithread</td><td valign="top">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">wsgi.run_once</td><td valign="top">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">wsgi.url_scheme</td><td valign="top">:</td><td><div>http</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">wsgi.version</td><td valign="top">:</td><td><div>1</div></td></tr></table></div></td></tr></table></div></td></tr></table></div>'
+tRp62
+sS'frames'
+p63
+(lp64
+(dp65
+S'file'
+p66
+S'D:\\work\\web2py_src\\web2py\\gluon\\restricted.py'
+p67
+sS'dump'
+p68
+(dp69
+S'environment'
+p70
+S"{'A': <class 'gluon.html.A'>, 'ANY_OF': <class 'gluon.validators.ANY_OF'>, 'Auth': <class 'gluon.tools.Auth'>, 'B': <class 'gluon.html.B'>, 'BEAUTIFY': <class 'gluon.html.BEAUTIFY'>, 'BODY': <class 'gluon.html.BODY'>, 'BR': <class 'gluon.html.BR'>, 'BUTTON': <class 'gluon.html.BUTTON'>, 'CAT': <class 'gluon.html.CAT'>, 'CENTER': <class 'gluon.html.CENTER'>, ...}"
+p71
+sS'ccode'
+p72
+S'<code object <module> at 037E4968, file "D:\\work...c\\web2py\\applications\\news\\models\\db.py", line 3>'
+p73
+ssS'lnum'
+p74
+I212
+sS'lines'
+p75
+(dp76
+I207
+S'    try:'
+p77
+sI208
+S'        if isinstance(code, types.CodeType):'
+p78
+sI209
+S'            ccode = code'
+p79
+sI210
+S'        else:'
+p80
+sI211
+S'            ccode = compile2(code, layer)'
+p81
+sI212
+S'        exec ccode in environment'
+p82
+sI213
+S'    except HTTP:'
+p83
+sI214
+S'        raise'
+p84
+sI215
+S'    except RestrictedError:'
+p85
+sI216
+S'        # do not encapsulate (obfuscate) the original RestrictedError'
+p86
+ssS'call'
+p87
+S'(code="# -*- coding: utf-8 -*-\\n\\nimport datetime\\nfrom gl...se_janrain(auth, filename=\'private/janrain.key\')\\n", environment={\'A\': <class \'gluon.html.A\'>, \'ANY_OF\': <class \'gluon.validators.ANY_OF\'>, \'Auth\': <class \'gluon.tools.Auth\'>, \'B\': <class \'gluon.html.B\'>, \'BEAUTIFY\': <class \'gluon.html.BEAUTIFY\'>, \'BODY\': <class \'gluon.html.BODY\'>, \'BR\': <class \'gluon.html.BR\'>, \'BUTTON\': <class \'gluon.html.BUTTON\'>, \'CAT\': <class \'gluon.html.CAT\'>, \'CENTER\': <class \'gluon.html.CENTER\'>, ...}, layer=r\'D:\\work\\web2py_src\\web2py\\applications\\news\\models\\db.py\')'
+p88
+sS'func'
+p89
+S'restricted'
+p90
+sa(dp91
+g66
+S'D:\\work\\web2py_src\\web2py\\applications\\news\\models\\db.py'
+p92
+sg68
+(dp93
+S'builtinformat'
+p94
+S'<built-in function format>'
+p95
+ssg74
+I22
+sg75
+(dp96
+I17
+S"   Field('newsdate', 'date', default=request.now),"
+p97
+sI18
+S"   Field('image', 'upload', autodelete=True),"
+p98
+sI19
+S"   Field('anons', 'string', length=1024),"
+p99
+sI20
+S"   Field('body', 'text'),"
+p100
+sI21
+S"   Field('id_user', db.auth_user, default=auth.user_id, readable=False, writable=False),"
+p101
+sI22
+S"   format = '%(title)s')"
+p102
+sI23
+S''
+sI24
+S"db.news.id_category.requires = IS_IN_DB(db, db.category.id, '%(title)s')"
+p103
+sI25
+S'db.category.title.requires = IS_NOT_EMPTY()'
+p104
+sI26
+S'db.news.title.requires = IS_NOT_EMPTY()'
+p105
+ssg87
+S'()'
+p106
+sg89
+S'<module>'
+p107
+sa(dp108
+g66
+S'D:\\work\\web2py_src\\web2py\\gluon\\dal.py'
+p109
+sg68
+(dp110
+S'fields'
+p111
+S'(<gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>)'
+p112
+sS'self'
+p113
+S'<DAL uri="oracle:******@xe">'
+p114
+sS'args'
+p115
+S"{'format': '%(title)s'}"
+p116
+sS'tablename'
+p117
+S"'news'"
+p118
+sS'table'
+p119
+S'undefined'
+p120
+sS'self.lazy_define_table'
+p121
+S'<bound method DAL.lazy_define_table of <DAL uri="oracle:******@xe">>'
+p122
+ssg74
+I7791
+sg75
+(dp123
+I7786
+S'                    % (tablename,invalid_args))'
+p124
+sI7787
+S'        if self._lazy_tables and not tablename in self._LAZY_TABLES:'
+p125
+sI7788
+S'            self._LAZY_TABLES[tablename] = (tablename,fields,args)'
+p126
+sI7789
+S'            table = None'
+p127
+sI7790
+S'        else:'
+p128
+sI7791
+S'            table = self.lazy_define_table(tablename,*fields,**args)'
+p129
+sI7792
+S'        if not tablename in self.tables:'
+p130
+sI7793
+S'            self.tables.append(tablename)'
+p131
+sI7794
+S'        return table'
+p132
+sI7795
+S''
+ssg87
+S'(self=<DAL uri="oracle:******@xe">, tablename=\'news\', *fields=(<gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>), **args={\'format\': \'%(title)s\'})'
+p133
+sg89
+S'define_table'
+p134
+sa(dp135
+g66
+S'D:\\work\\web2py_src\\web2py\\gluon\\dal.py'
+p136
+sg68
+(dp137
+S'polymodel'
+p138
+S'None'
+p139
+ssg74
+I7828
+sg75
+(dp140
+I7823
+S'            try:'
+p141
+sI7824
+S'                GLOBAL_LOCKER.acquire()'
+p142
+sI7825
+S'                self._lastsql = self._adapter.create_table('
+p143
+sI7826
+S'                    table,migrate=migrate,'
+p144
+sI7827
+S'                    fake_migrate=fake_migrate,'
+p145
+sI7828
+S'                    polymodel=polymodel)'
+p146
+sI7829
+S'            finally:'
+p147
+sI7830
+S'                GLOBAL_LOCKER.release()'
+p148
+sI7831
+S'        else:'
+p149
+sI7832
+S'            table._dbt = None'
+p150
+ssg87
+S'(self=<DAL uri="oracle:******@xe">, tablename=\'news\', *fields=(<gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>), **args={\'format\': \'%(title)s\'})'
+p151
+sg89
+S'lazy_define_table'
+p152
+sa(dp153
+g66
+S'D:\\work\\web2py_src\\web2py\\gluon\\dal.py'
+p154
+sg68
+(dp155
+S'fake_migrate'
+p156
+S'False'
+p157
+ssg74
+I991
+sg75
+(dp158
+I992
+S'        self.file_close(logfile)'
+p159
+sI993
+S'        return query'
+p160
+sI994
+S''
+sI995
+S'    def migrate_table('
+p161
+sI986
+S'            self.file_close(tfile)'
+p162
+sI987
+S'            if sql_fields != sql_fields_old:'
+p163
+sI988
+S'                self.migrate_table(table,'
+p164
+sI989
+S'                                   sql_fields, sql_fields_old,'
+p165
+sI990
+S'                                   sql_fields_aux, logfile,'
+p166
+sI991
+S'                                   fake_migrate=fake_migrate)'
+p167
+ssg87
+S'(self=<gluon.dal.OracleAdapter object>, table=<Table news (id,id_category,title,newsdate,image,anons,body,id_user)>, migrate=True, fake_migrate=False, polymodel=None)'
+p168
+sg89
+S'create_table'
+p169
+sa(dp170
+g66
+S'D:\\work\\web2py_src\\web2py\\gluon\\dal.py'
+p171
+sg68
+(dp172
+S'self'
+p173
+S'<gluon.dal.OracleAdapter object>'
+p174
+sS'self.execute'
+p175
+S'<bound method OracleAdapter.execute of <gluon.dal.OracleAdapter object>>'
+p176
+sS'sub_query'
+p177
+S"'ALTER TABLE news DROP COLUMN preview;'"
+p178
+ssg74
+I1094
+sg75
+(dp179
+I1089
+S'                              % datetime.datetime.today().isoformat())'
+p180
+sI1090
+S"                db['_lastsql'] = '\\n'.join(query)"
+p181
+sI1091
+S'                for sub_query in query:'
+p182
+sI1092
+S"                    logfile.write(sub_query + '\\n')"
+p183
+sI1093
+S'                    if not fake_migrate:'
+p184
+sI1094
+S'                        self.execute(sub_query)'
+p185
+sI1095
+S'                        # Caveat: mysql, oracle and firebird do not allow multiple alter table'
+p186
+sI1096
+S'                        # in one transaction so we must commit partial transactions and'
+p187
+sI1097
+S'                        # update table._dbt after alter table.'
+p188
+sI1098
+S'                        if db._adapter.commit_on_alter_table:'
+p189
+ssg87
+S"(self=<gluon.dal.OracleAdapter object>, table=<Table news (id,id_category,title,newsdate,image,anons,body,id_user)>, sql_fields={'anons': {'length': 1024, 'notnull': False, 'sortable': 6, 'sql': 'VARCHAR2(1024)', 'type': 'string', 'unique': False}, 'body': {'length': 32768, 'notnull': False, 'sortable': 7, 'sql': 'CLOB', 'type': 'text', 'unique': False}, 'id': {'length': 512, 'notnull': False, 'sortable': 1, 'sql': 'NUMBER PRIMARY KEY', 'type': 'id', 'unique': False}, 'id_category': {'length': 512, 'notnull': False, 'sortable': 2, 'sql': 'NUMBER, CONSTRAINT news_id_category__constraint ...egory) REFERENCES category (id) ON DELETE CASCADE', 'type': 'reference category', 'unique': False}, 'id_user': {'length': 512, 'notnull': False, 'sortable': 8, 'sql': 'NUMBER, CONSTRAINT news_id_user__constraint FORE...user) REFERENCES auth_user (id) ON DELETE CASCADE', 'type': 'reference auth_user', 'unique': False}, 'image': {'length': 512, 'notnull': False, 'sortable': 5, 'sql': 'VARCHAR2(512)', 'type': 'upload', 'unique': False}, 'newsdate': {'length': 512, 'notnull': False, 'sortable': 4, 'sql': 'DATE', 'type': 'date', 'unique': False}, 'title': {'length': 512, 'notnull': False, 'sortable': 3, 'sql': 'VARCHAR2(512) UNIQUE', 'type': 'string', 'unique': True}}, sql_fields_old={'anons': {'length': 1024, 'notnull': False, 'sortable': 6, 'sql': 'VARCHAR2(1024)', 'type': 'string', 'unique': False}, 'body': {'length': 32768, 'notnull': False, 'sortable': 5, 'sql': 'CLOB', 'type': 'text', 'unique': False}, 'id': {'length': 512, 'notnull': False, 'sortable': 1, 'sql': 'NUMBER PRIMARY KEY', 'type': 'id', 'unique': False}, 'id_category': {'length': 512, 'notnull': False, 'sortable': 2, 'sql': 'NUMBER, CONSTRAINT news_id_category__constraint ...egory) REFERENCES category (id) ON DELETE CASCADE', 'type': 'reference category', 'unique': False}, 'id_user': {'length': 512, 'notnull': False, 'sortable': 8, 'sql': 'NUMBER, CONSTRAINT news_id_user__constraint FORE...user) REFERENCES auth_user (id) ON DELETE CASCADE', 'type': 'reference auth_user', 'unique': False}, 'image': {'length': 512, 'notnull': False, 'sortable': 4, 'sql': 'VARCHAR2(512)', 'type': 'upload', 'unique': False}, 'newsdate': {'length': 512, 'notnull': False, 'sortable': 4, 'sql': 'DATE', 'type': 'date', 'unique': False}, 'preview': {'length': 512, 'notnull': False, 'sortable': 6, 'sql': 'VARCHAR2(512)', 'type': 'upload', 'unique': False}, 'title': {'length': 512, 'notnull': False, 'sortable': 3, 'sql': 'VARCHAR2(512) UNIQUE', 'type': 'string', 'unique': True}}, sql_fields_aux={'anons': {'sql': 'VARCHAR2(1024)'}, 'body': {'sql': 'CLOB'}, 'id': {'sql': 'NUMBER PRIMARY KEY'}, 'id_category': {'sql': 'NUMBER, CONSTRAINT news_id_category__constraint ...egory) REFERENCES category (id) ON DELETE CASCADE'}, 'id_user': {'sql': 'NUMBER, CONSTRAINT news_id_user__constraint FORE...user) REFERENCES auth_user (id) ON DELETE CASCADE'}, 'image': {'sql': 'VARCHAR2(512)'}, 'newsdate': {'sql': 'DATE'}, 'title': {'sql': 'VARCHAR2(512) UNIQUE'}}, logfile=<gluon.portalocker.LockedFile object>, fake_migrate=False)"
+p190
+sg89
+S'migrate_table'
+p191
+sa(dp192
+g66
+S'D:\\work\\web2py_src\\web2py\\gluon\\dal.py'
+p193
+sg68
+(dp194
+S'self'
+p195
+S'<gluon.dal.OracleAdapter object>'
+p196
+sS'args'
+p197
+S'[]'
+p198
+sS'command'
+p199
+S"'ALTER TABLE news DROP COLUMN preview'"
+p200
+sS'self.log_execute'
+p201
+S'<bound method OracleAdapter.log_execute of <gluon.dal.OracleAdapter object>>'
+p202
+ssg74
+I3021
+sg75
+(dp203
+I3016
+S"            command = command[:m.start('clob')] + str(i) + command[m.end('clob'):]"
+p204
+sI3017
+S'            args.append(m.group(\'clob\')[6:-2].replace("\'\'", "\'"))'
+p205
+sI3018
+S'            i += 1'
+p206
+sI3019
+S"        if command[-1:]==';':"
+p207
+sI3020
+S'            command = command[:-1]'
+p208
+sI3021
+S'        return self.log_execute(command, args)'
+p209
+sI3022
+S''
+sI3023
+S'    def create_sequence_and_triggers(self, query, table, **args):'
+p210
+sI3024
+S'        tablename = table._tablename'
+p211
+sI3025
+S'        sequence_name = table._sequence_name'
+p212
+ssg87
+S"(self=<gluon.dal.OracleAdapter object>, command='ALTER TABLE news DROP COLUMN preview', args=[])"
+p213
+sg89
+S'execute'
+p214
+sa(dp215
+g66
+S'D:\\work\\web2py_src\\web2py\\gluon\\dal.py'
+p216
+sg68
+(dp217
+S'a'
+S"('ALTER TABLE news DROP COLUMN preview', [])"
+p218
+sS'b'
+g21
+sS'self'
+p219
+S'<gluon.dal.OracleAdapter object>'
+p220
+sS'ret'
+p221
+g120
+sS'self.cursor'
+p222
+S'<__builtin__.OracleCursor on <cx_Oracle.Connection to test@xe>>'
+p223
+sS'command'
+p224
+S"'ALTER TABLE news DROP COLUMN preview'"
+p225
+sS'self.cursor.execute'
+p226
+S'<built-in method execute of OracleCursor object>'
+p227
+ssg74
+I1778
+sg75
+(dp228
+I1773
+S'            command = self.filter_sql_command(command)'
+p229
+sI1774
+S'        if self.db._debug:'
+p230
+sI1775
+S"            LOGGER.debug('SQL: %s' % command)"
+p231
+sI1776
+S'        self.db._lastsql = command'
+p232
+sI1777
+S'        t0 = time.time()'
+p233
+sI1778
+S'        ret = self.cursor.execute(command, *a[1:], **b)'
+p234
+sI1779
+S'        self.db._timings.append((command,time.time()-t0))'
+p235
+sI1780
+S'        del self.db._timings[:-TIMINGSSIZE]'
+p236
+sI1781
+S'        return ret'
+p237
+sI1782
+S''
+ssg87
+S"(self=<gluon.dal.OracleAdapter object>, *a=('ALTER TABLE news DROP COLUMN preview', []), **b={})"
+p238
+sg89
+S'log_execute'
+p239
+sasS'pyver'
+p240
+S'Python 2.7.5: c:\\python27\\python.exe (prefix: c:\\python27)'
+p241
+sS'session'
+p242
+g61
+(S's\n\t\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top">auth</td><td valign="top">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top">expiration</td><td valign="top">:</td><td><div>3600</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">hmac_key</td><td valign="top">:</td><td><div>1bb3fbb2-2b5b-4c18-89ef-0724e186800f</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">last_visit</td><td valign="top">:</td><td><div>datetime.datetime(2013, 6, 23, 22, 57, 14, 542000)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">remember</td><td valign="top">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">user</td><td valign="top">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top">email</td><td valign="top">:</td><td><div>msgoloborodov@gmail.com</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">first_name</td><td valign="top">:</td><td><div>\xd0\x9c\xd0\xb8\xd1\x85\xd0\xb0\xd0\xb8\xd0\xbb</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">id</td><td valign="top">:</td><td><div>1L</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">last_name</td><td valign="top">:</td><td><div>\xd0\x93\xd0\xbe\xd0\xbb\xd0\xbe\xd0\xb1\xd0\xbe\xd1\x80\xd0\xbe\xd0\xb4\xd0\xbe\xd0\xb2</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">registration_id</td><td valign="top">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">registration_key</td><td valign="top">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">reset_password_key</td><td valign="top">:</td><td><div>None</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">user_groups</td><td valign="top">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top">1</td><td valign="top">:</td><td><div>user_1</div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">flash</td><td valign="top">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">last_orderby</td><td valign="top">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">last_query</td><td valign="top">:</td><td><div>db.news.id&gt;0</div></td></tr></table></div>'
+tRp243
+sS'etype'
+p244
+S"<class 'cx_Oracle.DatabaseError'>"
+p245
+sS'date'
+p246
+S'Sun Jun 23 23:00:11 2013'
+p247
+sS'response'
+p248
+g61
+(S's\xb7\x11\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top">body</td><td valign="top">:</td><td><div>&lt;cStringIO.StringO object at 0x037ADE60&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">cookies</td><td valign="top">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top">session_id_news</td><td valign="top">:</td><td><div>127.0.0.1-18f5d805-0ac0-43dd-8116-c208695abdf6<table><tr><td style="font-weight:bold;vertical-align:top">comment</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">domain</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">expires</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">httponly</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">max-age</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">path</td><td valign="top">:</td><td><div>/</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">secure</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">version</td><td valign="top">:</td><td><div></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">delimiters</td><td valign="top">:</td><td><div><table><tr><td><div>{{</div></td></tr><tr><td><div>}}</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">files</td><td valign="top">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">flash</td><td valign="top">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">generic_patterns</td><td valign="top">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">headers</td><td valign="top">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top">X-Powered-By</td><td valign="top">:</td><td><div>web2py</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">menu</td><td valign="top">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">meta</td><td valign="top">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">models_to_run</td><td valign="top">:</td><td><div><table><tr><td><div>^\\w+\\.py$</div></td></tr><tr><td><div>^default/\\w+\\.py$</div></td></tr><tr><td><div>^default/index/\\w+\\.py$</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">postprocessing</td><td valign="top">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top">session_cookie_expires</td><td valign="top">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">session_data_name</td><td valign="top">:</td><td><div>session_data_news</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">session_file</td><td valign="top">:</td><td><div>&lt;open file &#x27;D:\\\\work\\\\web2py_src\\\\web2py\\\\applications\\\\news\\\\sessions\\\\127.0.0.1-18f5d805-0ac0-43dd-8116-c208695abdf6&#x27;, mode &#x27;rb+&#x27; at 0x037E7C80&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">session_filename</td><td valign="top">:</td><td><div>D:\\work\\web2py_src\\web2py\\applications\\news\\sessions\\127.0.0.1-18f5d805-0ac0-43dd-8116-c208695abdf6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">session_id</td><td valign="top">:</td><td><div>127.0.0.1-18f5d805-0ac0-43dd-8116-c208695abdf6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">session_id_name</td><td valign="top">:</td><td><div>session_id_news</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">session_locked</td><td valign="top">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">session_new</td><td valign="top">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">session_storage_type</td><td valign="top">:</td><td><div>file</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">status</td><td valign="top">:</td><td><div>200</div></td></tr><tr><td style="font-weight:bold;vertical-align:top">view</td><td valign="top">:</td><td><div>default/index.html</div></td></tr></table></div>'
+tRp249
+sS'locals'
+p250
+(dp251
+S'a'
+S"('ALTER TABLE news DROP COLUMN preview', [])"
+p252
+sS'self'
+p253
+S'<gluon.dal.OracleAdapter object>'
+p254
+sS'b'
+g21
+sS'command'
+p255
+S"'ALTER TABLE news DROP COLUMN preview'"
+p256
+sS't0'
+p257
+S'1372014011.993'
+p258
+sssS'traceback'
+p259
+S'Traceback (most recent call last):\n  File "D:\\work\\web2py_src\\web2py\\gluon\\restricted.py", line 212, in restricted\n    exec ccode in environment\n  File "D:\\work\\web2py_src\\web2py\\applications\\news\\models\\db.py", line 22, in <module>\n    format = \'%(title)s\')\n  File "D:\\work\\web2py_src\\web2py\\gluon\\dal.py", line 7791, in define_table\n    table = self.lazy_define_table(tablename,*fields,**args)\n  File "D:\\work\\web2py_src\\web2py\\gluon\\dal.py", line 7828, in lazy_define_table\n    polymodel=polymodel)\n  File "D:\\work\\web2py_src\\web2py\\gluon\\dal.py", line 991, in create_table\n    fake_migrate=fake_migrate)\n  File "D:\\work\\web2py_src\\web2py\\gluon\\dal.py", line 1094, in migrate_table\n    self.execute(sub_query)\n  File "D:\\work\\web2py_src\\web2py\\gluon\\dal.py", line 3021, in execute\n    return self.log_execute(command, args)\n  File "D:\\work\\web2py_src\\web2py\\gluon\\dal.py", line 1778, in log_execute\n    ret = self.cursor.execute(command, *a[1:], **b)\nDatabaseError: ORA-00904: "PREVIEW": invalid identifier\n\n'
+p260
+s.

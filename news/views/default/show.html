@@ -1,0 +1,15 @@
+{{extend 'layout.html'}}
+<div class="full">
+    <div class="description">
+        <time class="published-date" datetime="{{=news.newsdate}}">{{=news.newsdate}}</time>
+        <h2>{{=news.title}}</h2>
+		<div class="author">{{=db.auth_user[news.id_user].first_name}} {{=db.auth_user[news.id_user].last_name}}</div>
+        <div class="picture"><img src="{{=URL('download', args=news.image)}}"></div>
+        <div class="content"><pre>{{=news.body}}</pre></div>
+        {{if auth.is_logged_in():}}
+        <div class='action-links'>
+            {{=A('Редактировать', _href=URL("edit", args=news.id))}}
+        </div>
+        {{pass}}
+    </div>            
+</div>

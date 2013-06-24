@@ -1,0 +1,68 @@
+h3{
+	margin: 0;
+}
+.publications-list{
+	display: table;
+}
+.full{
+}
+.teaser{
+	display: table-row;
+}
+.teaser:last{
+	border-bottom: 0 none;
+	margin-bottom: 0;
+}
+
+.picture img{
+	max-width: 800px;
+}
+.teaser .picture img{
+	width: 150px;	
+}
+.description{
+}
+.teaser .picture, .teaser .description{
+	display: table-cell;
+	padding: 10px 0 10px 10px;
+	vertical-align: top;
+	empty-cells: hide;
+}
+.full .picture{
+	margin: 10px 10px 10px 0;
+}
+.author{
+	font-size: 0.8em;
+	color: #666666;
+	margin-bottom: 10px;
+}
+.action-links{
+	float: right;
+	font-size: 0.8em;
+}
+.published-date{
+    border-right: 1px dashed #CCCCCC;
+    color: #666666;
+    display: block;
+    float: left;
+    font-weight: bold;
+    line-height: 24px;
+    margin: 9px 10px 7px 0;
+    padding-right: 10px;
+}
+.content{
+	padding-right: 10px;
+}
+
+ul.category li {
+	list-style: none;
+}
+
+a.category-title {
+	cursor: pointer
+}
+
+pre {
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 14px;
+}

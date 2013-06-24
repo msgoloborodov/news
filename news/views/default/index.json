@@ -1,0 +1,5 @@
+{{from gluon.serializers import json}}
+{{=XML(json(categories.as_list()))}}
+{{for new in news:}}
+	{{=XML(json(news[new].as_list()))}}
+{{pass}}

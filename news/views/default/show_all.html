@@ -1,0 +1,19 @@
+{{extend 'layout.html'}}
+<h2>Все новости</h2>
+<div class="publications-list">
+	{{for new in news:}}
+    	<div class="teaser">
+            <div class="picture"><img src="{{=URL('download', args=new.image)}}"></div>
+            <div class="description">
+                <time class="published-date" datetime="{{=new.newsdate}}">{{=new.newsdate}}</time>
+                <h3>{{=A(new.title, _href=URL("show", args=new.id))}}</h3>
+                <div class="content">{{=new.anons}}</div>
+                {{if auth.is_logged_in():}}
+                <div class='action-links'>
+                    {{=A('Редактировать', _href=URL("edit", args=new.id))}}
+                </div>
+                {{pass}}
+        	</div>            
+        </div>
+	{{pass}}
+</div>
